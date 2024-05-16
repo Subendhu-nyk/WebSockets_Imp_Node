@@ -12,7 +12,11 @@
     const socket =io('http://localhost:3000/')
 
     socket.on('connect',(response)=>{
-        console.log(response)
+        console.log(response)        
+    })
+    // to recieve data from server to client ,we need to use on method with same key name defined in server
+    socket.on('message',(data)=>{
+        console.log("message from server>>",data)
     })
 </script>
 </body>
