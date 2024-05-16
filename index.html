@@ -17,6 +17,7 @@
     // to recieve data from server to client ,we need to use on method with same key name defined in server
     socket.on('message',(data)=>{
         console.log("message from server>>",data)
+        socket.emit('message',"hello i am sam")
     })
 </script>
 </body>

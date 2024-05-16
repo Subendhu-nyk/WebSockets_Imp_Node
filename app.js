@@ -10,9 +10,12 @@ const socket=new Server(httpServer,{
 socket.on('connection',(socket)=>{
     console.log(socket);
     // sending message from server to client by using emit method in socket,message is the event key
+    socket.on('message',(data)=>{
+     console.log("server message>>",data)   
+    })
     socket.emit("message","hello this is message")
 })
 
 httpServer.listen(3000,()=>{
-    console.log("server is connected")
+    // console.log("server is connected")
 })
