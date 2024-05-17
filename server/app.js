@@ -17,7 +17,11 @@ io.on('connection',(socket)=>{
         // console.log("scores>>",playerScores)
         // console.log("socket id", socket.id)
         socket.emit('playerscore',playerScores)
+        setInterval(()=>{
+        socket.emit('playerscore',playerScores)
+    },5000);
     })
+    
     
 })
 
