@@ -14,9 +14,11 @@ io.on('connection',(socket)=>{
     socket.on('scores',(scores)=>{
         // console.log("scores>>",scores)
         playerScores.push({...scores,id:socket.id})
-        console.log("scores>>",playerScores)
+        // console.log("scores>>",playerScores)
         // console.log("socket id", socket.id)
+        socket.emit('playerscore',playerScores)
     })
+    
 })
 
 httpServer.listen(3000,()=>{

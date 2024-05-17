@@ -9,7 +9,7 @@ function App() {
 
  function connectSocket(){
   socket.on('connection',(socket)=>{
-    console.log("socket",socket)
+    console.log("socket",socket)    
   })
  }
 
@@ -18,13 +18,18 @@ function App() {
   // console.log({[name]:value})  
   let currentObject={[name]:value}
   setScore((prev)=>({...prev,...currentObject}))  
+  
  }
 
 function sendScores(){
   console.log(score)
   socket.emit('scores',score)
+  socket.on('playerscore',(data)=>{
+    console.log('server data',data)
+  })
   
 }
+
 
  useEffect(()=>{connectSocket()},[])
   return (
