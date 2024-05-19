@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import { io } from 'socket.io-client'
-
+import {v4 as uuidv4} from "uuid"
 
 const CrudOperation = () => {
     const [formInputs,setFormInputs]=useState({})
@@ -14,7 +14,7 @@ const CrudOperation = () => {
         setFormInputs((prev)=>({...prev,...obj}))
     }
     const handleSubmit=()=>{       
-        socket.emit("data",formInputs)
+        socket.emit("data",{...formInputs,id:uuidv4()})
         socket.on('crudData',(data)=>{
             setCrudData(data)
             console.log("server sending data",data)
@@ -24,6 +24,12 @@ const CrudOperation = () => {
     const getEditData=(data)=>{
         setFormInputs(data)
         setIsEdit(true)
+    }
+    const handleEditData=()=>{
+        console.log(formInputs)
+        socket.emit("editData",formInputs)
+        setIsEdit(false)
+        setFormInputs({name:'',age:'',phone:''})
     }
     useEffect(()=>{
         socket.on('crudData',(data)=>{
@@ -37,7 +43,7 @@ const CrudOperation = () => {
       <input className='input-field' value={formInputs.name} onChange={handleInput} name='name' placeholder='Enter your name' /> 
         <input className='input-field' value={formInputs.age} onChange={handleInput} name='age' placeholder='Enter your age' />  
         <input className='input-field' value={formInputs.phone} onChange={handleInput} name='phone' placeholder='Enter your phone number' />   
-    <button onClick={handleSubmit}>{isEdit?"Edit":"Add"} data</button>
+    <button onClick={isEdit? handleEditData:handleSubmit}>{isEdit?"Edit":"Add"} data</button>
     </div>
     {crudData.length>0 ? <table>
         <tbody>

@@ -15,6 +15,13 @@ io.on('connection',(socket)=>{
         console.log(crudData)
         socket.emit('crudData',crudData)
     })
+    socket.on('editData',(res)=>{
+        console.log(res)
+        let currentIndex=crudData.findIndex((data)=>data.id===res.id)
+        if(currentIndex!==-1){
+            crudData[currentIndex]={...crudData[currentIndex],...res}
+        }
+    })
     setInterval(()=>{
         socket.emit('crudData',crudData)
     },1000)
