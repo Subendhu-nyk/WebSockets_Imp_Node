@@ -31,6 +31,13 @@ const CrudOperation = () => {
         setIsEdit(false)
         setFormInputs({name:'',age:'',phone:''})
     }
+
+
+    const handleDelete=(id)=>{
+
+socket.emit('deleteData',id)
+    }
+
     useEffect(()=>{
         socket.on('crudData',(data)=>{
             setCrudData(data)            
@@ -59,7 +66,7 @@ const CrudOperation = () => {
     <td>{data?.age}</td>    
     <td>{data?.phone}</td>   
     <td><button onClick={()=>getEditData(data)}>Edit</button></td>   
-    <td><button>Delete</button></td>  
+    <td><button onClick={()=>handleDelete(data?.id)}>Delete</button></td>  
   </tr>
     )
 
